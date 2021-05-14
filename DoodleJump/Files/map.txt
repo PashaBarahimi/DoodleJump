@@ -1,0 +1,27 @@
+26
+235 0 platform
+234 100 platform
+359 200 platform
+549 300 platform
+245 300 bplatform
+373 400 platform
+281 500 platform
+560 600 spring
+271 700 platform
+576 800 platform
+386 900 platform
+200 1000 platform
+471 1100 enemy
+218 1100 platform
+367 1200 mplatform
+243 1300 mplatform
+333 1400 platform
+556 1400 bplatform
+121 1500 enemy
+405 1500 platform
+232 1600 platform
+462 1700 platform
+134 1800 enemy
+380 1800 mplatform
+394 1900 mplatform
+350 2000 spring
