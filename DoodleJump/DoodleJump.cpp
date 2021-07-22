@@ -4,38 +4,38 @@
 GamePlay::Addresses getAddresses()
 {
 	GamePlay::Addresses addresses;
-	addresses.normalPlatform = "Files/normal_platform.png";
-	addresses.MovablePlatform = "Files/movable_platform.png";
-	addresses.breakablePlatform = { "Files/breakable_platform.png" ,"Files/breaking1.png" ,"Files/breaking2.png" ,"Files/breaking3.png" };
-	addresses.background = "Files/background.png";
-	addresses.doodler = { "Files/right.png" ,"Files/left.png" ,"Files/right_jumping.png" ,"Files/left_jumping.png" ,"Files/shooting.png" };
-	addresses.scoreBackground = "Files/score_background.png";
-	addresses.comicFont = "Files/comic.ttf";
-	addresses.gameOver = "Files/game_over.png";
-	addresses.springs = { "Files/compressed_spring.png" ,"Files/spring.png" };
-	addresses.enemies = { "Files/normal_enemy.png" ,"Files/movable_enemy.png" };
-	addresses.stars = { "Files/stars1.png" ,"Files/stars2.png" ,"Files/stars3.png" };
-	addresses.pauseButton = "Files/pause2.png";
-	addresses.pauseMenu = "Files/pause_cover.png";
-	addresses.resumeButton = { "Files/resume.png" ,"Files/resume_pressed.png" };
-	addresses.menuButton = { "Files/menu.png" ,"Files/menu_pressed.png" };
-	addresses.playAgainButton = { "Files/play_again.png" ,"Files/play_again_pressed.png" };
-	addresses.mainMenu = "Files/main_menu.png";
-	addresses.playButton = { "Files/play.png" ,"Files/play_pressed.png" };
-	addresses.spaceship = { "Files/spaceship_on.png" ,"Files/spaceship_off.png" };
-	addresses.pistol = "Files/pistol.png";
+	addresses.normalPlatform = "Files/Pictures/normal_platform.png";
+	addresses.MovablePlatform = "Files/Pictures/movable_platform.png";
+	addresses.breakablePlatform = { "Files/Pictures/breakable_platform.png" ,"Files/Pictures/breaking1.png" ,"Files/Pictures/breaking2.png" ,"Files/Pictures/breaking3.png" };
+	addresses.background = "Files/Pictures/background.png";
+	addresses.doodler = { "Files/Pictures/right.png" ,"Files/Pictures/left.png" ,"Files/Pictures/right_jumping.png" ,"Files/Pictures/left_jumping.png" ,"Files/Pictures/shooting.png" };
+	addresses.scoreBackground = "Files/Pictures/score_background.png";
+	addresses.comicFont = "Files/Fonts/comic.ttf";
+	addresses.gameOver = "Files/Pictures/game_over.png";
+	addresses.springs = { "Files/Pictures/compressed_spring.png" ,"Files/Pictures/spring.png" };
+	addresses.enemies = { "Files/Pictures/normal_enemy.png" ,"Files/Pictures/movable_enemy.png" };
+	addresses.stars = { "Files/Pictures/stars1.png" ,"Files/Pictures/stars2.png" ,"Files/Pictures/stars3.png" };
+	addresses.pauseButton = "Files/Pictures/pause2.png";
+	addresses.pauseMenu = "Files/Pictures/pause_cover.png";
+	addresses.resumeButton = { "Files/Pictures/resume.png" ,"Files/Pictures/resume_pressed.png" };
+	addresses.menuButton = { "Files/Pictures/menu.png" ,"Files/Pictures/menu_pressed.png" };
+	addresses.playAgainButton = { "Files/Pictures/play_again.png" ,"Files/Pictures/play_again_pressed.png" };
+	addresses.mainMenu = "Files/Pictures/main_menu.png";
+	addresses.playButton = { "Files/Pictures/play.png" ,"Files/Pictures/play_pressed.png" };
+	addresses.spaceship = { "Files/Pictures/spaceship_on.png" ,"Files/Pictures/spaceship_off.png" };
+	addresses.pistol = "Files/Pictures/pistol.png";
 	addresses.nameAndScore = "Files/nas.esl";
-	addresses.dynamicMap = "Files/sequence.txt";
-	addresses.staticMap = "Files/map.txt";
-	addresses.jumpEffect = "Files/jump.wav";
-	addresses.breakPlatformEffect = "Files/break_platform.wav";
-	addresses.jumpOnMonsterEffect = "Files/jump_on_monster.wav";
-	addresses.monsterCrashEffect = "Files/monster_crash.wav";
-	addresses.springEffect = "Files/spring.wav";
-	addresses.fallEffect = "Files/falling.wav";
-	addresses.nearEnemyEffect = "Files/near_enemy.wav";
-	addresses.pistolShootEffect = "Files/pistol_shoot.wav";
-	addresses.pistolKilledMonsterEffect = "Files/pistol_killed_enemy.wav";
+	addresses.dynamicMap = "Files/Maps/sequence.txt";
+	addresses.staticMap = "Files/Maps/map.txt";
+	addresses.jumpEffect = "Files/Sound Effects/jump.wav";
+	addresses.breakPlatformEffect = "Files/Sound Effects/break_platform.wav";
+	addresses.jumpOnMonsterEffect = "Files/Sound Effects/jump_on_monster.wav";
+	addresses.monsterCrashEffect = "Files/Sound Effects/monster_crash.wav";
+	addresses.springEffect = "Files/Sound Effects/spring.wav";
+	addresses.fallEffect = "Files/Sound Effects/falling.wav";
+	addresses.nearEnemyEffect = "Files/Sound Effects/near_enemy.wav";
+	addresses.pistolShootEffect = "Files/Sound Effects/pistol_shoot.wav";
+	addresses.pistolKilledMonsterEffect = "Files/Sound Effects/pistol_killed_enemy.wav";
 	return addresses;
 }
 
@@ -81,7 +81,7 @@ GamePlay::Locations getLocations()
 
 int main()
 {
-	Menu* menu = new Menu(getAddresses(), getSizes(), getLocations());
-	menu->mainMenu();
+	Menu menu = Menu(getAddresses(), getSizes(), getLocations());
+	menu.mainMenu();
 	return 0;
 }

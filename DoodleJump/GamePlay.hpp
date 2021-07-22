@@ -108,6 +108,7 @@ public:
 		Quit
 	};
 	GamePlay(const Addresses addresses, const Sizes sizes, Locations location, Window* window, int& highScore, string& name);
+	~GamePlay();
 	Actions process();
 private:
 	struct Sequence

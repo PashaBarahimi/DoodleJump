@@ -12,6 +12,20 @@ GamePlay::GamePlay(const Addresses addresses, const Sizes sizes, Locations locat
 	sequenceHeight_ = 0;
 }
 
+GamePlay::~GamePlay()
+{
+	delete board_;
+	delete doodler_;
+	for (Platform* pl : platforms_)
+		delete pl;
+	for (Spring* sp : springs_)
+		delete sp;
+	for (Enemy* en : enemies_)
+		delete en;
+	for (Pistol* pi : pistols_)
+		delete pi;
+}
+
 GamePlay::Actions GamePlay::process()
 {
 	const bool isDynamic = readDynamicMap();
@@ -21,6 +35,8 @@ GamePlay::Actions GamePlay::process()
 	window_->pause_music();
 	while (true)
 	{
+		if (!checkForInGameEvents())
+			return Actions::Quit;
 		int lag = DELAY;
 		while (lag >= DELAY)
 		{
@@ -44,8 +60,8 @@ GamePlay::Actions GamePlay::process()
 
 bool GamePlay::update()
 {
-	if (!checkForInGameEvents())
-		return false;
+	/*if (!checkForInGameEvents())
+		return false;*/
 	processPossibleChanges();
 	doodler_->move();
 	moveCameraUp();
@@ -223,7 +239,6 @@ GamePlay::Actions GamePlay::gameOverEvent() const
 				if (checkForButtonPress(locations_.name, sizes_.nameEdit, event))
 					editName();
 				break;
-			case Event::KEY_PRESS:
 			case Event::QUIT:
 				return Actions::Quit;
 			default:
@@ -479,13 +494,13 @@ void GamePlay::printGameOver() const
 			sizes_.playAgainButton.x, sizes_.playAgainButton.y));
 	window_->show_text(to_string(getHighScore()),
 		{ locations_.gameOverScore.x, locations_.gameOverScore.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-		BLACK, "Files/comic.ttf", 30);
+		BLACK, addresses_.comicFont, 30);
 	window_->show_text(to_string(checkForOverallHighScore()),
 		{ locations_.overallHighScore.x, locations_.overallHighScore.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-		BLACK, "Files/comic.ttf", 30);
+		BLACK, addresses_.comicFont, 30);
 	window_->show_text(name_,
 		{ locations_.name.x, locations_.name.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-		BLACK, "Files/comic.ttf", 30);
+		BLACK, addresses_.comicFont, 30);
 }
 
 int GamePlay::checkForOverallHighScore() const

@@ -21,6 +21,7 @@ public:
 		Movable = 1
 	};
 	Enemy(Point topLeftLocation, sizeVector size, GameBoard* board, Doodler* doodler);
+	virtual ~Enemy() = default;
 	virtual Type getType() = 0;
 	bool checkForCollision(sizeVector doodlerSize) const;
 	bool checkForPistolCollision(Point pistolTopLeftLocation, sizeVector pistolSize) const;

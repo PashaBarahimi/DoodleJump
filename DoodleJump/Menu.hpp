@@ -11,6 +11,7 @@ class Menu
 public:
 	void mainMenu();
 	Menu(const GamePlay::Addresses addresses, const GamePlay::Sizes sizes, const GamePlay::Locations locations);
+	~Menu();
 	Window* window_;
 private:
 	GamePlay::Addresses addresses_;

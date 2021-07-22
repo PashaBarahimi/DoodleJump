@@ -10,6 +10,15 @@ Menu::Menu(const GamePlay::Addresses addresses, const GamePlay::Sizes sizes, con
 	menuSpaceship_ = new Spaceship(menuBoard_, locations_.spaceship, sizes_.spaceship);
 }
 
+Menu::~Menu()
+{
+	delete window_;
+	delete menuBoard_;
+	delete menuDoodler_;
+	delete menuPlatform_;
+	delete menuSpaceship_;
+}
+
 void Menu::mainMenu()
 {
 	int highScore = 0;
@@ -18,13 +27,13 @@ void Menu::mainMenu()
 	srand(static_cast<unsigned>(time(nullptr)));
 	while (true)
 	{
-		GameBoard* menuBoard = new GameBoard(sizes_.background, DELAY);
 		if (!checkForMenuEvents())
 			return;
 		while (true)
 		{
 			GamePlay* game = new GamePlay(addresses_, sizes_, locations_, window_, highScore, name);
 			const GamePlay::Actions action = game->process();
+			delete game;
 			writeScoreToFile(name, highScore);
 			if (action == GamePlay::Actions::PlayAgain)
 				continue;

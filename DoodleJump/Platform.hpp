@@ -17,6 +17,7 @@ public:
 		Breakable
 	};
 	Platform(const Point location, const sizeVector size, GameBoard* board, Doodler* doodler);
+	virtual ~Platform() = default;
 	virtual Type getType() = 0;
 	bool checkForCollision(sizeVector doodlerSize) const;
 	Point getTopLeftLocation() const { return topLeftLocation_; }
