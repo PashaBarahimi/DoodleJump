@@ -60,8 +60,6 @@ GamePlay::Actions GamePlay::process()
 
 bool GamePlay::update()
 {
-	/*if (!checkForInGameEvents())
-		return false;*/
 	processPossibleChanges();
 	doodler_->move();
 	moveCameraUp();
