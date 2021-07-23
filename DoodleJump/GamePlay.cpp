@@ -1,11 +1,10 @@
 #include "GamePlay.hpp"
 
-GamePlay::GamePlay(const Addresses addresses, const Sizes sizes, Locations locations, Window* window, int& highScore, string& name) :
-	addresses_(addresses), sizes_(sizes), locations_(locations), window_(window), highScore_(highScore), name_(name)
+GamePlay::GamePlay(const Addresses addresses, const Sizes sizes, Locations locations, Window *window, int &highScore, string &name) : addresses_(addresses), sizes_(sizes), locations_(locations), window_(window), highScore_(highScore), name_(name)
 {
 	board_ = new GameBoard(sizes_.background, static_cast<double>(DELAY) / 1000);
-	doodler_ = new Doodler({ sizes_.background.x / 2 - sizes_.doodler[0].x / 2, sizes_.background.y - sizes_.doodler[0].y },
-		sizes_.doodler, board_);
+	doodler_ = new Doodler({sizes_.background.x / 2 - sizes_.doodler[0].x / 2, sizes_.background.y - sizes_.doodler[0].y},
+						   sizes_.doodler, board_);
 	gameOver_ = false;
 	fellAfterGameOver_ = false;
 	sequenceStart_ = 0;
@@ -16,13 +15,13 @@ GamePlay::~GamePlay()
 {
 	delete board_;
 	delete doodler_;
-	for (Platform* pl : platforms_)
+	for (Platform *pl : platforms_)
 		delete pl;
-	for (Spring* sp : springs_)
+	for (Spring *sp : springs_)
 		delete sp;
-	for (Enemy* en : enemies_)
+	for (Enemy *en : enemies_)
 		delete en;
-	for (Pistol* pi : pistols_)
+	for (Pistol *pi : pistols_)
 		delete pi;
 }
 
@@ -118,7 +117,7 @@ void GamePlay::readStaticMap()
 	staticInput.close();
 }
 
-void GamePlay::readValuesFromDynamicMap(ifstream& input)
+void GamePlay::readValuesFromDynamicMap(ifstream &input)
 {
 	int sequencesCount;
 	input >> sequencesCount;
@@ -151,8 +150,7 @@ GamePlay::Sequence::Sequence(int start, int end, int totalHeight, vector<string>
 	y_ = y;
 }
 
-
-void GamePlay::readValuesFromStaticMap(ifstream& input)
+void GamePlay::readValuesFromStaticMap(ifstream &input)
 {
 	int entitiesCount;
 	input >> entitiesCount;
@@ -190,12 +188,11 @@ void GamePlay::addDataFromMap(int x, int y, string type, int base = 0)
 		enemies_.push_back(new MovableEnemy(getTopLeftFromMiddleDown(x, y, sizes_.enemies[1]) - Point(0, base), sizes_.enemies[1], board_, doodler_));
 }
 
-
 Point GamePlay::getTopLeftFromMiddleDown(int x, int y, sizeVector size) const
 {
 	const int newX = (5 * x / 8) - size.x / 2;
 	const int newY = sizes_.background.y - ((5 * y / 8) - size.y);
-	return { newX,newY };
+	return {newX, newY};
 }
 
 void GamePlay::processPossibleChanges()
@@ -205,7 +202,6 @@ void GamePlay::processPossibleChanges()
 	processEnemyChanges();
 	processPistolChanges();
 }
-
 
 int GamePlay::getAppropriateDelay(unsigned int prevTime)
 {
@@ -222,14 +218,14 @@ GamePlay::Actions GamePlay::gameOverEvent() const
 			switch (event.get_type())
 			{
 			case Event::LCLICK:
-				if (checkForButtonPress({ locations_.menuButton.x,locations_.menuButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-					sizes_.menuButton, event))
+				if (checkForButtonPress({locations_.menuButton.x, locations_.menuButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance())},
+										sizes_.menuButton, event))
 				{
 					menuButton();
 					return Actions::Menu;
 				}
-				if (checkForButtonPress({ locations_.playAgainButton.x,locations_.playAgainButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-					sizes_.playAgainButton, event))
+				if (checkForButtonPress({locations_.playAgainButton.x, locations_.playAgainButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance())},
+										sizes_.playAgainButton, event))
 				{
 					playAgainButton();
 					return Actions::PlayAgain;
@@ -283,7 +279,7 @@ void GamePlay::editName() const
 	}
 }
 
-void GamePlay::endEditingName(const ostringstream& nameStream, const string& prevName) const
+void GamePlay::endEditingName(const ostringstream &nameStream, const string &prevName) const
 {
 	if (nameStream.str().empty())
 		name_ = prevName;
@@ -295,8 +291,8 @@ void GamePlay::endEditingName(const ostringstream& nameStream, const string& pre
 void GamePlay::menuButton() const
 {
 	window_->draw_img(addresses_.menuButton[1],
-		Rectangle({ locations_.menuButton.x,locations_.menuButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-			sizes_.menuButton.x, sizes_.menuButton.y));
+					  Rectangle({locations_.menuButton.x, locations_.menuButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance())},
+								sizes_.menuButton.x, sizes_.menuButton.y));
 	window_->update_screen();
 	delay(BUTTON_PRESS_DELAY);
 }
@@ -304,8 +300,8 @@ void GamePlay::menuButton() const
 void GamePlay::playAgainButton() const
 {
 	window_->draw_img(addresses_.playAgainButton[1],
-		Rectangle({ locations_.playAgainButton.x,locations_.playAgainButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-			sizes_.playAgainButton.x, sizes_.playAgainButton.y));
+					  Rectangle({locations_.playAgainButton.x, locations_.playAgainButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance())},
+								sizes_.playAgainButton.x, sizes_.playAgainButton.y));
 	window_->update_screen();
 	delay(BUTTON_PRESS_DELAY);
 }
@@ -378,10 +374,10 @@ bool GamePlay::pause()
 	}
 }
 
-bool GamePlay::checkForButtonPress(Point topLeftLocation, sizeVector size, const Event& event)
+bool GamePlay::checkForButtonPress(Point topLeftLocation, sizeVector size, const Event &event)
 {
 	return event.get_mouse_position().x >= topLeftLocation.x && event.get_mouse_position().x <= topLeftLocation.x + size.x &&
-		event.get_mouse_position().y >= topLeftLocation.y && event.get_mouse_position().y <= topLeftLocation.y + size.y;
+		   event.get_mouse_position().y >= topLeftLocation.y && event.get_mouse_position().y <= topLeftLocation.y + size.y;
 }
 
 void GamePlay::moveCameraUp()
@@ -392,17 +388,16 @@ void GamePlay::moveCameraUp()
 	moveCamera(pixel);
 }
 
-
 void GamePlay::moveCamera(int pixel)
 {
 	doodler_->moveWithCamera(pixel);
-	for (Platform* platform : platforms_)
+	for (Platform *platform : platforms_)
 		platform->moveWithCamera(pixel);
-	for (Spring* spring : springs_)
+	for (Spring *spring : springs_)
 		spring->moveWithCamera(pixel);
-	for (Enemy* enemy : enemies_)
+	for (Enemy *enemy : enemies_)
 		enemy->moveWithCamera(pixel);
-	for (Pistol* pistol : pistols_)
+	for (Pistol *pistol : pistols_)
 		pistol->moveWithCamera(pixel);
 	board_->changeBase(pixel);
 }
@@ -415,9 +410,9 @@ void GamePlay::printOnScreen() const
 	printSprings();
 	printEnemies();
 	printPistols();
-	window_->draw_img(addresses_.scoreBackground, Rectangle({ 0,0 }, sizes_.scoreBackground));
+	window_->draw_img(addresses_.scoreBackground, Rectangle({0, 0}, sizes_.scoreBackground));
 	window_->draw_img(addresses_.pauseButton, Rectangle(locations_.pauseButton, sizes_.pauseButton.x, sizes_.pauseButton.y));
-	window_->show_text(to_string(getHighScore()), locations_.scoreLocation, { 100,100,100 }, addresses_.comicFont, 30);
+	window_->show_text(to_string(getHighScore()), locations_.scoreLocation, {100, 100, 100}, addresses_.comicFont, 30);
 	printDoodler();
 	if (doodler_->isCrashedToEnemy())
 		printStars();
@@ -428,7 +423,7 @@ void GamePlay::printOnScreen() const
 
 void GamePlay::printPlatforms() const
 {
-	for (Platform* platform : platforms_)
+	for (Platform *platform : platforms_)
 		if (platform->shouldBePrinted())
 			switch (platform->getType())
 			{
@@ -439,7 +434,7 @@ void GamePlay::printPlatforms() const
 				window_->draw_img(addresses_.MovablePlatform, Rectangle(platform->getTopLeftLocation(), platform->getBottomRightLocation()));
 				break;
 			case Platform::Type::Breakable:
-				const int status = static_cast<int>(dynamic_cast<BreakablePlatform*>(platform)->getStatus());
+				const int status = static_cast<int>(dynamic_cast<BreakablePlatform *>(platform)->getStatus());
 				window_->draw_img(addresses_.breakablePlatform[status], Rectangle(platform->getTopLeftLocation(), platform->getBottomRightLocation()));
 				break;
 			}
@@ -447,19 +442,18 @@ void GamePlay::printPlatforms() const
 
 void GamePlay::printSprings() const
 {
-	for (Spring* spring : springs_)
+	for (Spring *spring : springs_)
 		if (spring->shouldBePrinted())
 			window_->draw_img(addresses_.springs[static_cast<int>(spring->getSpringStatus())],
-				Rectangle(spring->getTopLeftLocation(), spring->getBottomRightLocation()));
+							  Rectangle(spring->getTopLeftLocation(), spring->getBottomRightLocation()));
 }
 
 void GamePlay::printEnemies() const
 {
-	for (Enemy* enemy : enemies_)
+	for (Enemy *enemy : enemies_)
 		if (enemy->shouldBePrinted())
 			window_->draw_img(addresses_.enemies[static_cast<int>(enemy->getType())], Rectangle(enemy->getTopLeftLocation(), enemy->getBottomRightLocation()));
 }
-
 
 void GamePlay::printDoodler() const
 {
@@ -471,34 +465,34 @@ void GamePlay::printDoodler() const
 void GamePlay::printStars() const
 {
 	window_->draw_img(addresses_.stars[rand() % addresses_.stars.size()],
-		Rectangle(doodler_->getTopLeftLocation() + locations_.stars, sizes_.stars.x, sizes_.stars.y));
+					  Rectangle(doodler_->getTopLeftLocation() + locations_.stars, sizes_.stars.x, sizes_.stars.y));
 }
 
 void GamePlay::printPistols() const
 {
-	for (Pistol* pistol : pistols_)
+	for (Pistol *pistol : pistols_)
 		window_->draw_img(addresses_.pistol, Rectangle(pistol->getTopLeftLocation(), pistol->getBottomRightLocation()));
 }
 
 void GamePlay::printGameOver() const
 {
-	window_->draw_img(addresses_.gameOver, Rectangle({ 0, static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-		board_->getSize().x, board_->getSize().y));
+	window_->draw_img(addresses_.gameOver, Rectangle({0, static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance())},
+													 board_->getSize().x, board_->getSize().y));
 	window_->draw_img(addresses_.menuButton[0],
-		Rectangle({ locations_.menuButton.x,locations_.menuButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-			sizes_.menuButton.x, sizes_.menuButton.y));
+					  Rectangle({locations_.menuButton.x, locations_.menuButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance())},
+								sizes_.menuButton.x, sizes_.menuButton.y));
 	window_->draw_img(addresses_.playAgainButton[0],
-		Rectangle({ locations_.playAgainButton.x,locations_.playAgainButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-			sizes_.playAgainButton.x, sizes_.playAgainButton.y));
+					  Rectangle({locations_.playAgainButton.x, locations_.playAgainButton.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance())},
+								sizes_.playAgainButton.x, sizes_.playAgainButton.y));
 	window_->show_text(to_string(getHighScore()),
-		{ locations_.gameOverScore.x, locations_.gameOverScore.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-		BLACK, addresses_.comicFont, 30);
+					   {locations_.gameOverScore.x, locations_.gameOverScore.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance())},
+					   BLACK, addresses_.comicFont, 30);
 	window_->show_text(to_string(checkForOverallHighScore()),
-		{ locations_.overallHighScore.x, locations_.overallHighScore.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-		BLACK, addresses_.comicFont, 30);
+					   {locations_.overallHighScore.x, locations_.overallHighScore.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance())},
+					   BLACK, addresses_.comicFont, 30);
 	window_->show_text(name_,
-		{ locations_.name.x, locations_.name.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance()) },
-		BLACK, addresses_.comicFont, 30);
+					   {locations_.name.x, locations_.name.y + static_cast<int>(FALL_DISTANCE_RATIO * board_->getSize().y - board_->getFallDistance())},
+					   BLACK, addresses_.comicFont, 30);
 }
 
 int GamePlay::checkForOverallHighScore() const
@@ -523,10 +517,10 @@ void GamePlay::processPlatformChanges()
 		case Platform::Type::Normal:
 			break;
 		case Platform::Type::Movable:
-			dynamic_cast<MovablePlatform*>(platforms_[i])->move();
+			dynamic_cast<MovablePlatform *>(platforms_[i])->move();
 			break;
 		case Platform::Type::Breakable:
-			BreakablePlatform* platform = dynamic_cast<BreakablePlatform*>(platforms_[i]);
+			BreakablePlatform *platform = dynamic_cast<BreakablePlatform *>(platforms_[i]);
 			const BreakablePlatform::Status status = platform->getStatus();
 			if (status != BreakablePlatform::Status::NotBroken)
 				platform->checkForBreakLevel(sizes_.breakablePlatform[static_cast<int>(status)]);
@@ -572,7 +566,7 @@ void GamePlay::processEnemyChanges()
 		enemies_[i]->setWasUnderDoodler();
 		enemies_[i]->checkForDestroy();
 		if (enemies_[i]->getType() == Enemy::Type::Movable)
-			dynamic_cast<MovableEnemy*>(enemies_[i])->move();
+			dynamic_cast<MovableEnemy *>(enemies_[i])->move();
 	}
 }
 
@@ -603,7 +597,7 @@ bool GamePlay::checkForPlatformCollision()
 {
 	if (!doodler_->isGoingDownward())
 		return false;
-	for (Platform* platform : platforms_)
+	for (Platform *platform : platforms_)
 		if (platform->checkForCollision(sizes_.doodler[static_cast<int>(doodler_->getPrintStatus())]))
 		{
 			switch (platform->getType())
@@ -614,7 +608,7 @@ bool GamePlay::checkForPlatformCollision()
 				window_->play_sound_effect(addresses_.jumpEffect);
 				break;
 			case Platform::Type::Breakable:
-				dynamic_cast<BreakablePlatform*>(platform)->breakPlatform(sizes_.breakablePlatform[1]);
+				dynamic_cast<BreakablePlatform *>(platform)->breakPlatform(sizes_.breakablePlatform[1]);
 				window_->play_sound_effect(addresses_.breakPlatformEffect);
 				break;
 			}
@@ -627,7 +621,7 @@ bool GamePlay::checkForSpringCollision()
 {
 	if (!doodler_->isGoingDownward())
 		return false;
-	for (Spring* spring : springs_)
+	for (Spring *spring : springs_)
 		if (spring->checkForCollision(sizes_.doodler[static_cast<int>(doodler_->getPrintStatus())]))
 		{
 			spring->expand();
@@ -640,16 +634,16 @@ bool GamePlay::checkForSpringCollision()
 
 bool GamePlay::checkForEnemyCollision()
 {
-	for (Enemy* enemy : enemies_)
+	for (Enemy *enemy : enemies_)
 		if (enemy->checkForCollision(sizes_.doodler[static_cast<int>(doodler_->getPrintStatus())]))
 		{
-			/*if (enemy->wasUnderDoodler())
+			if (enemy->wasUnderDoodler())
 			{
 				enemy->destroy();
 				doodler_->handleCollision(Doodler::Collision::Platform, enemy->getTopLeftLocation());
 				window_->play_sound_effect(addresses_.jumpOnMonsterEffect);
 			}
-			else*/
+			else
 			{
 				doodler_->handleCollision(Doodler::Collision::Enemy, enemy->getTopLeftLocation());
 				window_->play_sound_effect(addresses_.monsterCrashEffect);
@@ -670,7 +664,7 @@ bool GamePlay::fallingHandler()
 
 bool GamePlay::isEnemyNear()
 {
-	for (Enemy* enemy : enemies_)
+	for (Enemy *enemy : enemies_)
 		if (enemy->getTopLeftLocation().y >= -board_->getSize().y / 2)
 			return true;
 	return false;
@@ -679,8 +673,8 @@ bool GamePlay::isEnemyNear()
 void GamePlay::makePistol()
 {
 	doodler_->shootPistol();
-	const Point pistolTopLeftLocation = { doodler_->getTopLeftLocation().x + sizes_.doodler[static_cast<int>(doodler_->getPrintStatus())].x / 2 - sizes_.pistol.x / 2,
-		doodler_->getTopLeftLocation().y - sizes_.pistol.y };
+	const Point pistolTopLeftLocation = {doodler_->getTopLeftLocation().x + sizes_.doodler[static_cast<int>(doodler_->getPrintStatus())].x / 2 - sizes_.pistol.x / 2,
+										 doodler_->getTopLeftLocation().y - sizes_.pistol.y};
 	pistols_.push_back(new Pistol(board_, sizes_.pistol, pistolTopLeftLocation));
 	window_->play_sound_effect(addresses_.pistolShootEffect);
 }
