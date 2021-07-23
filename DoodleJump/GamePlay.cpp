@@ -321,7 +321,7 @@ bool GamePlay::checkForInGameEvents()
 			else if (pressedKey == 'a' || pressedKey == 'P')
 				doodler_->startHorizontalMovement(Doodler::Direction::Left);
 			else if (pressedKey == 'R' || pressedKey == 'w' || pressedKey == ' ')
-				if (doodler_->getStatus() != Doodler::Status::Falling)
+				if (doodler_->getStatus() != Doodler::Status::EnemyCrash)
 					makePistol();
 			break;
 		case Event::KEY_RELEASE:
