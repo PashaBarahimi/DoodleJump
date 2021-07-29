@@ -13,8 +13,8 @@ Makefile template by [MisaghM](https://github.com/MisaghM).
 
 ## How To Play
 
-The doodler moves left or right whether by `arrow keys(← →)` or `A and D`.  
-It shots pistols by `up arrow key(↑)` or `Space` or `W`.
+The doodler moves left or righ by `arrow keys(← →)` or `A and D`.  
+It shoots pistols by `up arrow key(↑)` or `Space` or `W`.
 
 ## Libraries
 
@@ -25,7 +25,7 @@ It shots pistols by `up arrow key(↑)` or `Space` or `W`.
 > -   [SDL2_mixer](https://www.libsdl.org/projects/SDL_mixer/)
 > -   [SDL2_ttf](https://www.libsdl.org/projects/SDL_ttf/)
 
-These libraries are included in the repository in `include` folder only for **`MinGW32`**.  
+These libraries are included in the repository in `lib` folder only for **`MinGW32`**.  
 For `MSVC` or `Linux` follow the links above to install the required libraries.
 
 ## License
