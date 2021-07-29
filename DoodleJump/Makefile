@@ -15,7 +15,6 @@ endif
 include vars.mk
 
 LDFLAGS =
-LDLIBS = 
 
 ifeq ($(OS),Windows_NT)
 	CPPFLAGS += -I "$(PATH_INC)"
