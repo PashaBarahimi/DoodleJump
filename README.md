@@ -13,7 +13,7 @@ Makefile template by [MisaghM](https://github.com/MisaghM).
 
 ## How To Play
 
-The doodler moves left or righ by `arrow keys(← →)` or `A and D`.  
+The doodler moves left or right by `arrow keys(← →)` or `A and D`.  
 It shoots pistols by `up arrow key(↑)` or `Space` or `W`.
 
 ## Libraries
