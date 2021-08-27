@@ -11,6 +11,9 @@
 A Doodle Jump game written in C++ powered by [`RSDL`](https://github.com/UTAP/RSDL "RSDL GitHub") which is a SDL2 wrapper.  
 Makefile template by [MisaghM](https://github.com/MisaghM).
 
+![Menu](./sc/menu.png)
+![GamePlay](./sc/gameplay.png)
+
 ## How To Play
 
 The doodler moves left or right by `arrow keys(← →)` or `A and D`.  
