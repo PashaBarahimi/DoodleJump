@@ -62,5 +62,5 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 ###############################################################################
-DoodleJump/lib/* linguist-vendored=false
-DoodleJump/src/include/SDL2/* linguist-vendored=false
+DoodleJump/lib/* linguist-vendored
+DoodleJump/src/include/SDL2/* linguist-vendored
